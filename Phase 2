@@ -1,0 +1,118 @@
+package orderEntryPhase2;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+class InputUtils {
+    private static final Scanner input; // Declare scanner here
+
+    static {
+        input = new Scanner(System.in); // Initialize it in a static block
+    }
+
+    public static double readDouble(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return input.nextDouble();
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid number.");
+                input.nextLine(); // clear buffer
+            }
+        }
+    }
+
+    public static int readInteger(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return input.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid integer.");
+                input.nextLine(); // clear buffer
+            }
+        }
+    }
+}
+
+class Item {
+    String itemNumber;
+    String itemDescription;
+    double itemPrice;
+    int quantityOrdered;
+    double totalTax;
+    double totalDiscount;
+    double grossAmount; // Added gross amount field
+
+    public Item(String itemNumber, String itemDescription, double itemPrice, int quantityOrdered, double totalTax, double totalDiscount) {
+        this.itemNumber = itemNumber;
+        this.itemDescription = itemDescription;
+        this.itemPrice = itemPrice;
+        this.quantityOrdered = quantityOrdered;
+        this.totalTax = totalTax;
+        this.totalDiscount = totalDiscount;
+        this.grossAmount = itemPrice * quantityOrdered; // Calculate gross amount
+    }
+
+    @Override
+    public String toString() {
+        double taxPercent = (totalTax / grossAmount) * 100;
+        double taxAmount = totalTax;
+        double discountPercent = (totalDiscount / grossAmount) * 100;
+        double discountAmount = totalDiscount;
+        double netAmount = grossAmount + totalTax - totalDiscount;
+
+        // Creating the output with fixed-width formatting
+        String itemNumStr = String.format("%-10s", itemNumber);
+        String descStr = String.format("%-15s", itemDescription);
+        String grossAmountStr = String.format("%10.2f", grossAmount);
+        String taxPercentStr = String.format("%6.1f%%", taxPercent);
+        String taxAmountStr = String.format("%10.2f", taxAmount);
+        String discountPercentStr = String.format("%6.1f%%", discountPercent);
+        String discountAmountStr = String.format("%10.2f", discountAmount);
+        String netAmountStr = String.format("%10.2f", netAmount);
+
+        return itemNumStr + descStr + grossAmountStr + taxPercentStr + taxAmountStr + discountPercentStr + discountAmountStr + netAmountStr;
+    }
+}
+
+public class OrderEntryPhase2 {
+    private List<Item> items = new ArrayList<>();
+    private static final Scanner input = new Scanner(System.in);
+    public void getData() {
+        boolean moreItems = true;
+        while (moreItems) {
+            System.out.print("Enter item number: ");
+            String itemNumber = input.nextLine();
+
+            System.out.print("Enter item description: ");
+            String itemDescription = input.nextLine();
+
+            double itemPrice = InputUtils.readDouble("Enter item price: $");
+            int quantityOrdered = InputUtils.readInteger("Enter quantity ordered: ");
+            double totalTax = InputUtils.readDouble("Enter total tax for the items: $");
+            double totalDiscount = InputUtils.readDouble("Enter total discount for the items: $");
+
+            Item newItem = new Item(itemNumber, itemDescription, itemPrice, quantityOrdered, totalTax, totalDiscount);
+            items.add(newItem);
+
+            System.out.print("Enter another item? (yes/no): ");
+            moreItems = input.nextLine().trim().equalsIgnoreCase("yes");
+        }
+    }
+
+    public void displayItems() {
+        System.out.println("Item Numb Description   Gross Amount Tax %  Tax Amount Discount %  Discount Amount Net Amount");
+        for (Item item : items) {
+            System.out.println(item);
+        }
+    }
+
+    public static void main(String[] args) {
+        OrderEntryPhase2 myOrder = new OrderEntryPhase2();
+        myOrder.getData();
+        myOrder.displayItems();
+    }
+}
