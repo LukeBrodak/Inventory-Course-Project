@@ -1,0 +1,132 @@
+package orderEntryPhaseThree;
+
+import java.util.Scanner;
+
+public class OrderEntryPhaseThree {
+
+    private static double totalGrossAmount = 0.0;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        char choice;
+
+        do {
+            String itemNumber = promptString(scanner, "Enter item number (alphanumeric): ");
+            String itemDescription = promptString(scanner, "Enter item description (alphanumeric): ");
+            double itemPrice = promptDouble(scanner, "Enter the item price (decimal): ");
+            int quantityOrdered = promptInt(scanner, "Enter quantity ordered (integer): ");
+
+            double grossAmount = itemPrice * quantityOrdered;
+            totalGrossAmount += grossAmount;
+
+            System.out.println("\nItem added: " + itemDescription + ", Item Number: " + itemNumber);
+
+            System.out.print("\nDo you want to enter another item? (y/n): ");
+            choice = scanner.next().charAt(0);
+        } while (choice == 'y' || choice == 'Y');
+
+     
+        double taxPercent = promptDouble(scanner, "Enter the tax percentage for all items: ");
+        double taxAmount = totalGrossAmount * taxPercent / 100;
+
+        double discountPercent = promptDouble(scanner, "Enter the discount percent for all items: ");
+        double discountAmount = totalGrossAmount * discountPercent / 100;
+
+        double netAmount = totalGrossAmount + taxAmount - discountAmount;
+
+        System.out.printf("%-20s\t%-20s\t%-20s\t%-20s\n", "Total Gross Amount", "Total Tax Amount", "Total Discount Amount", "Total Net Amount");
+        System.out.printf("$%-19.2f\t$%-19.2f\t$%-19.2f\t$%-19.2f\n", totalGrossAmount, taxAmount, discountAmount, netAmount);
+
+        System.out.println("\nThank you for using the Order Entry program!");
+        scanner.close();
+    }
+
+    public static int promptInt(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter an integer value.");
+            scanner.next(); // Clear the invalid input before retrying
+        }
+        return scanner.nextInt();
+    }
+
+    public static String promptString(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        return scanner.next(); // This will only read input up to the first space.
+    }
+
+    public static double promptDouble(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Invalid input. Please enter a decimal value.");
+            scanner.next(); // Clear the invalid input before retrying
+        }
+        return scanner.nextDouble();
+    }
+}
+package orderEntryPhaseThree;
+
+import java.util.Scanner;
+
+public class OrderEntryPhaseThree {
+
+    private static double totalGrossAmount = 0.0;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        char choice;
+
+        do {
+            String itemNumber = promptString(scanner, "Enter item number (alphanumeric): ");
+            String itemDescription = promptString(scanner, "Enter item description (alphanumeric): ");
+            double itemPrice = promptDouble(scanner, "Enter the item price (decimal): ");
+            int quantityOrdered = promptInt(scanner, "Enter quantity ordered (integer): ");
+
+            double grossAmount = itemPrice * quantityOrdered;
+            totalGrossAmount += grossAmount;
+
+            System.out.println("\nItem added: " + itemDescription + ", Item Number: " + itemNumber);
+
+            System.out.print("\nDo you want to enter another item? (y/n): ");
+            choice = scanner.next().charAt(0);
+        } while (choice == 'y' || choice == 'Y');
+
+     
+        double taxPercent = promptDouble(scanner, "Enter the tax percentage for all items: ");
+        double taxAmount = totalGrossAmount * taxPercent / 100;
+
+        double discountPercent = promptDouble(scanner, "Enter the discount percent for all items: ");
+        double discountAmount = totalGrossAmount * discountPercent / 100;
+
+        double netAmount = totalGrossAmount + taxAmount - discountAmount;
+
+        System.out.printf("%-20s\t%-20s\t%-20s\t%-20s\n", "Total Gross Amount", "Total Tax Amount", "Total Discount Amount", "Total Net Amount");
+        System.out.printf("$%-19.2f\t$%-19.2f\t$%-19.2f\t$%-19.2f\n", totalGrossAmount, taxAmount, discountAmount, netAmount);
+
+        System.out.println("\nThank you for using the Order Entry program!");
+        scanner.close();
+    }
+
+    public static int promptInt(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter an integer value.");
+            scanner.next(); // Clear the invalid input before retrying
+        }
+        return scanner.nextInt();
+    }
+
+    public static String promptString(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        return scanner.next(); // This will only read input up to the first space.
+    }
+
+    public static double promptDouble(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Invalid input. Please enter a decimal value.");
+            scanner.next(); // Clear the invalid input before retrying
+        }
+        return scanner.nextDouble();
+    }
+}
